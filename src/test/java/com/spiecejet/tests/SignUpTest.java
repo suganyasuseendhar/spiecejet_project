@@ -1,18 +1,29 @@
 package com.spiecejet.tests;
 
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.spiecejet.utils.Reports;
 import com.spiecejet.pages.SignUpPage;
 
-public class SignUpTest extends SignUpPage {
 
-	@Test
+
+@Listeners(Reports.class)
+
+
+
+public class SignUpTest extends SignUpPage {
+	Reports report = new Reports();
+
+	@Test(priority = 0)
 	public void signUP() {
 
 		try {
 
-			launchBrowser("https://spiceclub.spicejet.com/signup");
+			
+			report.setTCDesc("Validate signup functionality");
+			//launchBrowser("https://spiceclub.spicejet.com/signup");
 
 			SignUpPage signpage = PageFactory.initElements(driver, SignUpPage.class);
 			signpage.clickSelect();
@@ -31,8 +42,9 @@ public class SignUpTest extends SignUpPage {
 
 			signpage.agreeClick();
 			Thread.sleep(2000);
-			signpage.redButtonClick();
-
+			//signpage.redButtonClick();
+			//signpage.redButtonClick();
+			signpage.clickSubmitButton();
 		} catch (Exception e) {
 
 			System.out.println("Problem while signup your account");

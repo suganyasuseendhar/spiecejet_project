@@ -1,33 +1,41 @@
 package com.spiecejet.tests;
 
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.spiecejet.pages.FlightStatusPage;
-import com.spiecejet.pages.SignUpPage;
+import com.spiecejet.utils.BaseTest;
+import com.spiecejet.utils.Reports;
 
-public class FlightStatusTest extends FlightStatusPage{
+@Listeners(Reports.class)
+public class FlightStatusTest extends BaseTest{
 
-	@Test
-	public void signUP() {
+	
+	Reports report = new Reports();
+
+	@Test(priority = 6)
+	
+	public void flightStatus() {
 
 		try {
 
-			launchBrowser("https://www.spicejet.com/");
+			report.setTCDesc("Validate Flight Status in SpiceJet website");
+			//launchBrowser("https://www.spicejet.com/");
 
 			FlightStatusPage status = PageFactory.initElements(driver, FlightStatusPage.class);
 			
 			status.clickFlightStatus();
-			status.clickDepatureDate("Tomorrow");
-			
-			
-			
-			
-			
-}catch (Exception e) {
-
-	System.out.println("Problem while signup your account");
-	e.printStackTrace();
-}
-}
+			status.clickDepatureDate("tomarrow");
+			status.clickToday();
+			status.start("chen");
+			status.end("del");
+			status.clickSearchButton();
+			validateTitle("SpiceJet - Flight Booking for Domestic and International, Cheap Air Tickets");
+			System.out.println("Flight status Fields Verified successfully");
+			closeBrowser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
