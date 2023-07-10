@@ -15,17 +15,14 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-
-
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -36,8 +33,36 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 	public class BaseTest{
 
 	public static WebDriver driver = null;
+	
+	@BeforeMethod
+	@Parameters({ "browser" })
+	public void launchBrowser(String browserName) {
+		if (browserName.equalsIgnoreCase("chrome")) {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.get("https://www.spicejet.com");
+		}
+		
+		else if (browserName.equalsIgnoreCase("FireFox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.get("https://www.spicejet.com");
+		}
+		
+		else if (browserName.equalsIgnoreCase("edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.get("https://www.spicejet.com");
+		}
+	}
 
-	public void launchBrowser(String url) {
+	/*public void launchBrowser(String url) {
 
 		try {
 			WebDriverManager.chromedriver().setup();
@@ -53,6 +78,26 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 			ex.printStackTrace();
 		}
 
+	}*/
+	
+	public void brokenLink(String url) {
+
+		try {
+			HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
+			httpConnection.connect();
+			int respCode = httpConnection.getResponseCode();
+
+			if (respCode >= 400) {
+				System.out.println(url + " is broken and its responsecode is " + respCode);
+				Reports.reportStep("PASS", "This " + url + " is broken");
+			} else {
+				System.out.println(url + " is Valid and its responsecode is " + respCode);
+				Reports.reportStep("PASS", "This " + url + " is verified valid link");
+			}
+		} catch (Exception ex) {
+			Reports.reportStep("FAIL", "Problem while Verifing the " + url + " as broken link");
+			ex.printStackTrace();
+		}
 	}
 	public void clickAction(WebElement ele) {
 		try {
@@ -387,6 +432,63 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 		typeText(menu, value);
 		
 	}*/
+	
+	
+	
+	public void actionClick(WebElement ele) {
+		try {
+			Actions act = new Actions(driver);
+			act.click(ele).build().perform();
+			//Reports.reportStep("PASS", "The " + ele + " has been clicked succesfully");
+		} catch (Exception ex) {
+			//Reports.reportStep("FAIL", "The " + ele + " wasn't clicked");
+			ex.printStackTrace();
+		}
+	}
+	
+	public void framesByWebElement(WebElement ele) {
+		try {
+			driver.switchTo().frame(ele);
+			//Reports.reportStep("PASS", "The frame is swicthed successfully using WebElement " + ele);
+		} catch (Exception e) {
+			//Reports.reportStep("FAIL", "Problem while switching the frame using WebElement" + ele);
+			e.printStackTrace();
+		}
+	}
+	
+	public void validateText(WebElement ele, String text) {
+
+		try {
+			Assert.assertEquals(ele.getText(), text);
+			//Reports.reportStep("PASS", "This " + text + " has been verified successfully");
+		} catch (Exception e) {
+			//Reports.reportStep("FAIL", "Problem while Verifing the " + text);
+			e.printStackTrace();
+		}
+	}
+	
+	public void framesByDefault() {
+		try {
+			driver.switchTo().defaultContent();
+			//Reports.reportStep("PASS", "The frame is swicthed to parent frame successfully");
+		} catch (Exception e) {
+			//Reports.reportStep("FAIL", "Problem while switching the parent frame ");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void validateTitle(String expectedTitle) {
+
+		try {
+			Assert.assertEquals(driver.getTitle(), expectedTitle);
+			Reports.reportStep("PASS", "This " + expectedTitle + " has been verified successfully");
+		} catch (Exception e) {
+			Reports.reportStep("FAIL", "Problem while Verifing the " + expectedTitle);
+			e.printStackTrace();
+		}
+	}
+
 	}
 
 	
