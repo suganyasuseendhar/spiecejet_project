@@ -65,112 +65,15 @@ public class OneWayTripPage extends BaseTest {
 	
 	
 	
-	/*@FindBy(xpath = "(//div[@class='css-1dbjc4n r-14lw9ot r-11u4nky r-z2wwpe r-1phboty r-rs99b7 r-1loqt21 r-13awgt0 r-ymttw5 r-5njf8e r-1otgn73'])[2]")
-	WebElement passengers;
-
-	public void selectpassengers() {
-		
-		waitForElement(passengers);
-		clickAction(passengers);
-		
-		
+	@FindBy(xpath="//div[text()='Search Flight']")
+	WebElement search;
+	
+	public void clickSearchFlight() {
+		waitForElement(search);
+		//clickAction(search);
+	//	jsClick(search);
+		actionClick(search);
 	}
-	
-	
-	@FindBy(xpath = "(//div[@class='css-1dbjc4n r-14lw9ot r-11u4nky r-z2wwpe r-1phboty r-rs99b7 r-1loqt21 r-13awgt0 r-ymttw5 r-5njf8e r-1otgn73'])[2]")
-	WebElement passengers2;
-
-	public void selectpassengers2(String content) {
-		
-		waitForElement(passengers2);
-		clickAction(passengers2);
-		sendChild(content);
-		//selectDDByVisibleText(passengers2, content);
-		//multiselect();
-		
-	}
-
-	
-	*/
-			
-		/*	@FindBy(xpath = "(//div[@class='css-76zvg2 r-homxoj r-adyw6z r-q4m81j'])[2]")
-			WebElement children;
-
-			public void sendChild(String value) {
-				
-				waitForElement(children);
-				//clickAction(passengers2);
-				//selectDDByVisibleText(passengers2, content);
-				//multiselect();
-				typeText(children, value);
-				
-			}	*/	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
-
-
-@FindBy  (xpath = "//div[text()='Currency']")
-WebElement currency;
-
-
-public void selectCurrency(String curr) {
-
-	waitForElement(currency);
-	clickAction(currency);
-	selectDDByVisibleText(currency, curr);
-}
-
-
-@FindBy  (xpath = "//div[text()='Family & Friends']")
-WebElement familyFriends;
-
-
-public void selectfamilyFriends(String family) {
-
-	waitForElement(familyFriends);
-	clickAction(familyFriends);
-	//selectDDByVisibleText(currency, curr);
-}
-
-
-
-@FindBy  (xpath = "//div[text()='Search Flight']")
-WebElement searchFlight;
-
-
-public void clickSearchFlight() {
-
-	waitForElement(searchFlight);
-	//clickAction(searchFlight);
-	//jsClick(searchFlight);
-	doubeclick(searchFlight);
-	//selectDDByVisibleText(currency, curr);
-}
-}
-
-
-
-
-
-	/*public void multiselect() {
-		Select sel = new Select(passengers);
-		sel.isMultiple();
-		*/
 		
 		
-	
+}

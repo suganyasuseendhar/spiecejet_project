@@ -145,7 +145,7 @@ public class SignUpPage extends BaseTest{
 	}
 	
 	
-	@FindBy(xpath="//button[@type='button'][@class='btn btn-red']")
+	/*@FindBy(xpath="//button[@type='button'][@class='btn btn-red']")
 	WebElement submit;
 	
 	public void redButtonClick() {
@@ -154,10 +154,18 @@ public class SignUpPage extends BaseTest{
 		
 		jsScrollUpToElement(submit);
 		//jsClick(submit);
-	}
+	}*/
 	
+	@FindBy(xpath="//button[text()='Submit']")
+	WebElement submit1;
 	
+	public void clickSubmitButton() {
+		waitForElement(submit1);
+		//clickAction(submit);
+		//jsClick(submit);
+		//doubleclick(submit);
+		actionClick(submit1);
 }
 
-
+}
 
